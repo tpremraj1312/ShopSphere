@@ -28,3 +28,6 @@ pnpm-debug.log*
 # OS Files
 .DS_Store
 Thumbs.db
+
+server/scripts/seed-cataloue-new.js
+server/scripts/catalogue-final.js
