@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../config/api';
 
 export default function ShortUrlResolver() {
   const { code } = useParams();
@@ -12,7 +13,7 @@ export default function ShortUrlResolver() {
       return;
     }
 
-    fetch(`/api/v1/share/${code}`, {
+    fetch(`${API_BASE_URL}/share/${code}`, {
       headers: {
         Accept: 'application/json',
       },

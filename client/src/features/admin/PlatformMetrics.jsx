@@ -2,6 +2,7 @@ import React from 'react';
 import { useGetPlatformMetricsQuery, useGetLiveTelemetryQuery } from '../../store/adminApi';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
+import { API_BASE_URL } from '../../config/api';
 import { RefreshCw, Activity, AlertTriangle, ExternalLink, CheckCircle2 } from 'lucide-react';
 
 export default function PlatformMetrics() {
@@ -33,7 +34,7 @@ export default function PlatformMetrics() {
 
         <div className="flex items-center gap-2">
           <a
-            href="/api/v1/metrics"
+            href={`${API_BASE_URL}/metrics`}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 h-[32px] px-3 bg-white border border-[#D5D9D9] hover:bg-[#F7FAFA] rounded-[3px] text-[12px] text-[#0F1111] transition-colors"

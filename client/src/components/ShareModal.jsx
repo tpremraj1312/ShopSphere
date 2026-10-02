@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from './ui/Button';
 import Price from './ui/Price';
+import { API_BASE_URL } from '../config/api';
 import {
   Share2,
   Copy,
@@ -35,7 +36,7 @@ export default function ShareModal({
     const origin = window.location.origin;
 
     // Call URL Shortener API
-    fetch('/api/v1/share/shorten', {
+    fetch(`${API_BASE_URL}/share/shorten`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
