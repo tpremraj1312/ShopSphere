@@ -61,15 +61,20 @@ app.use(helmet({
 }));
 
 // SEC-12: CORS — allowlist from environment, no wildcard on authenticated routes
-const allowedOrigins = (process.env.CORS_ORIGINS || process.env.CLIENT_URL || 'http://localhost:5173')
-  .split(',')
-  .map(o => o.trim());
+const configuredOrigins = [process.env.CORS_ORIGINS, process.env.CLIENT_URL]
+  .filter(Boolean)
+  .flatMap(value => value.split(','));
+const allowedOrigins = (configuredOrigins.length > 0
+  ? configuredOrigins
+  : ['http://localhost:5173', 'https://shop-sphere-blush-delta.vercel.app'])
+  .map(origin => origin.trim().replace(/\/+$/, ''))
+  .filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, server-to-server, curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins.includes(origin.replace(/\/+$/, ''))) {
       return callback(null, true);
     }
     securityLogger.warn('CORS_REJECTED', { blockedOrigin: origin });
