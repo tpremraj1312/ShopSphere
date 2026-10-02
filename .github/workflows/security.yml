@@ -1,0 +1,55 @@
+name: Security Audit & Testing (SEC-15)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Run daily at 02:00 UTC
+    - cron: '0 2 * * *'
+
+jobs:
+  audit:
+    name: Dependency Vulnerability Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: |
+            server/package-lock.json
+            client/package-lock.json
+
+      - name: Audit Server Dependencies
+        working-directory: ./server
+        run: npm audit --audit-level=high
+
+      - name: Audit Client Dependencies
+        working-directory: ./client
+        run: npm audit --audit-level=high
+
+  security-tests:
+    name: Security Headers & IDOR Matrix Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Server Dependencies
+        working-directory: ./server
+        run: npm ci
+
+      - name: Run Full Security Test Suite
+        working-directory: ./server
+        run: node --test tests/unit/security.headers.test.js tests/unit/sanitize.test.js tests/unit/idor.matrix.test.js

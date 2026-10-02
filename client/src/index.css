@@ -1,0 +1,421 @@
+@import "tailwindcss";
+
+/* ===================================================================
+   ShopSphere Design Tokens (Section 2 of the Design Brief)
+   =================================================================== */
+@layer base {
+  :root {
+    /* Navigation */
+    --nav-bg: #131921;
+    --nav-sub-bg: #232F3E;
+    --nav-hover-border: #FFFFFF;
+
+    /* Surfaces */
+    --page-bg: #EAEDED;
+    --surface: #FFFFFF;
+
+    /* Borders */
+    --border: #D5D9D9;
+    --border-strong: #A6A6A6;
+
+    /* Text */
+    --text-primary: #0F1111;
+    --text-secondary: #565959;
+    --text-muted: #767676;
+
+    /* Links */
+    --link: #007185;
+    --link-hover: #C7511F;
+
+    /* Semantic colors */
+    --price: #B12704;
+    --success: #007600;
+    --danger: #B12704;
+    --warning-star: #FFA41C;
+
+    /* Buttons */
+    --btn-primary: #FFD814;
+    --btn-primary-hover: #F7CA00;
+    --btn-buy: #FFA41C;
+    --btn-buy-hover: #FA8900;
+    --btn-secondary-bg: #FFFFFF;
+    --btn-secondary-bd: #D5D9D9;
+
+    /* Focus */
+    --focus-ring: #007185;
+
+    /* Typography */
+    --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+    /* Layout */
+    --max-width: 1500px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 14px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    background-color: var(--page-bg);
+    color: var(--text-primary);
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  /* Focus ring on all interactive elements */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Skip to content link */
+  .skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 8px 16px;
+    background: var(--btn-primary);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+  }
+
+  .skip-to-content:focus {
+    left: 0;
+  }
+
+  /* Links */
+  a {
+    color: var(--link);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 21px;
+    font-weight: 500;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Inputs */
+  input,
+  textarea,
+  select {
+    font-family: var(--font-sans);
+    font-size: 14px;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    height: 34px;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    padding: 4px 8px;
+    background: var(--surface);
+    color: var(--text-primary);
+  }
+
+  textarea {
+    height: auto;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: #E77600;
+    box-shadow: 0 0 0 3px rgba(228, 121, 17, 0.5);
+  }
+
+  /* Buttons base reset */
+  button {
+    font-family: var(--font-sans);
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+/* ===================================================================
+   Utility classes
+   =================================================================== */
+
+/* Page container */
+.page-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 1280px) {
+  .page-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* White surface card */
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* Price colors */
+.text-price {
+  color: var(--price);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-link {
+  color: var(--link);
+}
+
+/* ===================================================================
+   Skeleton shimmer animation
+   =================================================================== */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #F0F2F2 25%, #E8EAEB 37%, #F0F2F2 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 3px;
+}
+
+/* ===================================================================
+   Functional transitions only (Section 14)
+   =================================================================== */
+.transition-colors-fast {
+  transition: color 100ms ease, background-color 100ms ease, border-color 100ms ease;
+}
+
+.transition-drawer {
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.transition-carousel {
+  transition: transform 400ms ease;
+}
+
+/* ===================================================================
+   Respect prefers-reduced-motion
+   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .skeleton {
+    animation: none;
+    background: #F0F2F2;
+  }
+}
+
+/* ===================================================================
+   Scrollbar (subtle, neutral)
+   =================================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--page-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ===================================================================
+   Overlay / backdrop for modals and drawers
+   =================================================================== */
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+}
+
+/* Star rating colors */
+.star-filled {
+  color: var(--warning-star);
+}
+
+.star-empty {
+  color: #D5D9D9;
+}
+
+/* ===================================================================
+   Button hover/active states (Section 2.4)
+   =================================================================== */
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--btn-primary-hover) !important;
+}
+
+.btn-primary:active:not(:disabled) {
+  background-color: #F0B800 !important;
+}
+
+.btn-buy:hover:not(:disabled) {
+  background-color: var(--btn-buy-hover) !important;
+}
+
+.btn-buy:active:not(:disabled) {
+  background-color: #E07C00 !important;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #F7FAFA !important;
+}
+
+.btn-secondary:active:not(:disabled) {
+  background-color: #EDEDED !important;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #FFF0F0 !important;
+}
+
+/* ===================================================================
+   Hide scrollbar utility
+   =================================================================== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===================================================================
+   Password strength meter (Section 10)
+   =================================================================== */
+.strength-meter {
+  height: 3px;
+  border-radius: 2px;
+  background: #D5D9D9;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.strength-meter-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 200ms ease, background-color 200ms ease;
+}
+
+.strength-weak { background-color: #B12704; width: 25%; }
+.strength-fair { background-color: #E77600; width: 50%; }
+.strength-good { background-color: #007185; width: 75%; }
+.strength-strong { background-color: #007600; width: 100%; }
+
+/* ===================================================================
+   Tooltip styles (Section 13)
+   =================================================================== */
+.tooltip-container {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltip-content {
+  position: absolute;
+  z-index: 50;
+  padding: 6px 10px;
+  background: var(--nav-bg);
+  color: #FFFFFF;
+  font-size: 12px;
+  line-height: 1.4;
+  border-radius: 3px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+
+.tooltip-container:hover .tooltip-content,
+.tooltip-container:focus-within .tooltip-content {
+  opacity: 1;
+}
+
+.tooltip-top {
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-bottom {
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
